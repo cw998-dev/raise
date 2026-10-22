@@ -1,0 +1,117 @@
+import "./pi-package-dir";
+import "./dev-agent-dir";
+import "./fix-path";
+import { join } from "node:path";
+import { pathToFileURL } from "node:url";
+import { createLogger, initLogging, PiBackend } from "@raise/backend";
+import { app, BrowserWindow, Menu, nativeTheme, net, protocol, screen, shell } from "electron";
+import { backgroundsDir } from "./background";
+import { registerIpc } from "./ipc";
+import { initLanObserver, type LanObserverHandle } from "./lan";
+import { attachRendererWatchdog } from "./renderer-watchdog";
+import { UiPluginManager, uiPluginsResourcesDir } from "./ui-plugins/manager";
+import { loadUiState } from "./ui-state";
+import { initUpdater, scheduleAutoUpdateCheck } from "./updater";
+import { applyChromeTheme, createWindow, markQuitting, resolveTheme } from "./window";
+import { sanitizeWindowBounds } from "./window-bounds";
+
+const log = createLogger("main");
+let backend: PiBackend;
+let uiPluginsManager: UiPluginManager;
+let lanObserver: LanObserverHandle | undefined;
+
+/**
+ * 追加进每次会话系统提示词的桌面端段落（每次调用都付费，保持精简）。
+ * 让 agent 知道自己跑在 Raise 桌面端、界面可被 UI 插件定制、以及定制流程与信任门。
+ */
+const UI_PLUGIN_PROMPT: string[] = [
+	"你运行在 Raise 桌面端（Electron 图形界面），用户通过图形聊天界面与你交互，不是 CLI 终端。",
+	"Raise 的界面可以用 UI 插件定制：当前可替换「工具调用卡 / 子代理卡 / 任务列表面板」三处组件。",
+	"用户想改界面、或问「界面能改什么」时：读 ~/.raise/ui-plugins/SPEC.md（示例在 _examples/ 目录），按规范写一个插件，保存即自动热重载。",
+	"写完引导用户去「设置 → UI 插件」打开总开关并启用（信任门：agent 不能代劳）。",
+];
+
+/** renderer 加载自定义背景图的协议（pi-bg://background/<文件名>，只读 userData/backgrounds/） */
+const BG_PROTOCOL = "pi-bg";
+
+protocol.registerSchemesAsPrivileged([
+	{ scheme: BG_PROTOCOL, privileges: { standard: true, secure: true, supportFetchAPI: true } },
+]);
+
+// Windows/Linux 不显示默认应用菜单（File/Edit/...）；macOS 菜单在系统菜单栏且承担复制粘贴等快捷键，保留
+if (process.platform !== "darwin") Menu.setApplicationMenu(null);
+// 系统深浅色变化（或用户切换主题导致 themeSource 变更）→ 同步窗口底色与 Windows 窗口按钮覆盖层
+nativeTheme.on("updated", () => applyChromeTheme(nativeTheme.themeSource));
+
+app.whenReady().then(async () => {
+	initLogging(join(app.getPath("userData"), "logs"));
+	log.info("app ready", { version: app.getVersion(), userData: app.getPath("userData") });
+
+	// 自定义背景图协议：pi-bg://background/<文件名> → userData/backgrounds/<文件名>（文件名白名单防路径穿越）
+	protocol.handle(BG_PROTOCOL, (request) => {
+		const name = decodeURIComponent(new URL(request.url).pathname).replace(/^\/+/, "");
+		if (!/^[\w.-]+$/.test(name)) return new Response("invalid background name", { status: 400 });
+		return net.fetch(pathToFileURL(join(backgroundsDir(), name)).toString());
+	});
+
+	backend = new PiBackend({
+		// 桌面端集成：UI 插件技能目录 + 内置协作 skill 目录（均随包分发）+ 系统提示词段落
+		// MCP OAuth 授权页交给系统浏览器（官方内置 mcp 扩展用；缺省则扩展自行回落到平台默认浏览器）
+		openExternal: (url) => shell.openExternal(url),
+		desktopIntegration: {
+			appendSystemPrompt: UI_PLUGIN_PROMPT,
+			additionalSkillPaths: [
+				join(uiPluginsResourcesDir(), "skills"),
+				// 内置协作 skill（channel-pickup/design-handoff）：语义上与 UI 插件无关，独立目录分发
+				app.isPackaged ? join(process.resourcesPath, "skills") : join(__dirname, "../../resources/skills"),
+			],
+		},
+	});
+	await backend.init();
+	attachRendererWatchdog(backend);
+
+	lanObserver = await initLanObserver(
+		backend,
+		join(app.getPath("userData"), "lan-observer.json"),
+		join(app.getPath("userData"), "lan-audit.jsonl"),
+	);
+	uiPluginsManager = new UiPluginManager();
+	await uiPluginsManager.init();
+	registerIpc(backend, uiPluginsManager, lanObserver);
+	await initUpdater();
+	scheduleAutoUpdateCheck();
+	const uiState = await loadUiState();
+	// main 进程原生主题与 app 设置对齐（Windows 窗口按钮覆盖层/后续主题切换的 system 解析依赖它）
+	nativeTheme.themeSource = uiState?.theme ?? "system";
+	// 窗口位置/尺寸记忆：写盘时只保证尺寸合法，「这块屏还在不在」在这里校验（进程就绪后才能取 screen）——
+	// 拔屏/换屏后的旧 bounds 会被判空或夹回可见区，不会把窗口开到看不见的地方
+	const initialBounds = sanitizeWindowBounds(
+		uiState?.windowBounds ?? null,
+		screen.getAllDisplays().map((display) => display.workArea),
+	);
+	createWindow(resolveTheme(uiState?.theme), initialBounds);
+
+	app.on("activate", () => {
+		const [win] = BrowserWindow.getAllWindows();
+		// macOS 关窗只是隐藏窗口：点 Dock 图标要把原窗口（含会话与草稿）原样带回来
+		if (win) {
+			if (win.isMinimized()) win.restore();
+			win.show();
+			win.focus();
+			return;
+		}
+		createWindow(resolveTheme(uiState?.theme), initialBounds);
+	});
+});
+
+app.on("window-all-closed", () => {
+	if (process.platform !== "darwin") app.quit();
+});
+
+app.on("before-quit", () => {
+	// 先放行 close 拦截：否则 macOS 下 ⌘Q 会被当成「关窗 → 隐藏」而退不掉
+	markQuitting();
+	void lanObserver?.stop();
+	backend?.dispose();
+	uiPluginsManager?.disposeWatcher();
+});

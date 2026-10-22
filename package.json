@@ -1,0 +1,38 @@
+{
+	"name": "raise",
+	"private": true,
+	"version": "0.1.0",
+	"description": "Desktop GUI for the Pi coding agent, built with Electron",
+	"license": "MIT",
+	"author": "zwxwrich",
+	"repository": {
+		"type": "git",
+		"url": "git+https://gitee.com/zwxwrich/raise.git"
+	},
+	"bugs": "https://gitee.com/zwxwrich/raise/issues",
+	"workspaces": [
+		"packages/*"
+	],
+	"scripts": {
+		"dev": "npm run dev -w packages/desktop",
+		"postinstall": "patch-package && node node_modules/electron/install.js",
+		"build": "npm run build -w packages/desktop",
+		"typecheck": "npm run typecheck --workspaces",
+		"test": "npm run test --workspaces --if-present",
+		"dist": "npm run dist -w packages/desktop",
+		"lint": "biome check ."
+	},
+	"engines": {
+		"node": ">=22.19"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.4.0",
+		"patch-package": "^8.0.1"
+	},
+	"allowScripts": {
+		"electron@43.3.0": true
+	},
+	"dependencies": {
+		"yarn": "^1.22.22"
+	}
+}

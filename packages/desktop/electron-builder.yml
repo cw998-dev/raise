@@ -1,0 +1,79 @@
+appId: io.gitee.zwxwrich.raise
+productName: Raise
+directories:
+  output: dist
+files:
+  - out/**
+  - package.json
+  - "!node_modules/@raise"
+asarUnpack:
+  - "**/*.node"
+  # UI 插件运行时构建：esbuild 要 spawn 平台二进制，asar 内无法 exec（spawn ENOTDIR）；
+  # unpack 后 Electron child_process 自动把 app.asar 路径重写为 app.asar.unpacked
+  - "**/node_modules/esbuild/**"
+  - "**/node_modules/@esbuild/**"
+# pi SDK 包资源镜像：docs/examples/README 不进 asar，agent 的 read/bash 工具都能直接访问。
+# main 进程经 PI_PACKAGE_DIR 指到这里（export-html/themes/package.json 同根解析，必须一起带）。
+extraResources:
+  - from: "../../node_modules/@earendil-works/pi-coding-agent/docs"
+    to: "pi-package/docs"
+  - from: "../../node_modules/@earendil-works/pi-coding-agent/examples"
+    to: "pi-package/examples"
+  - from: "../../node_modules/@earendil-works/pi-coding-agent/README.md"
+    to: "pi-package/README.md"
+  - from: "../../node_modules/@earendil-works/pi-coding-agent/CHANGELOG.md"
+    to: "pi-package/CHANGELOG.md"
+  - from: "../../node_modules/@earendil-works/pi-coding-agent/package.json"
+    to: "pi-package/package.json"
+  - from: "../../node_modules/@earendil-works/pi-coding-agent/dist/core/export-html"
+    to: "pi-package/dist/core/export-html"
+  - from: "../../node_modules/@earendil-works/pi-coding-agent/dist/modes/interactive/theme"
+    to: "pi-package/dist/modes/interactive/theme"
+  - from: "../../node_modules/@earendil-works/pi-coding-agent/dist/modes/interactive/assets"
+    to: "pi-package/dist/modes/interactive/assets"
+  # UI 插件 agent 规范三件套（SPEC/raise-ui.d.ts/skill/examples）：main 经 process.resourcesPath 读取
+  - from: "resources/ui-plugins"
+    to: "ui-plugins"
+  # 内置协作 skill（channel-pickup/design-handoff）：additionalSkillPaths 扫描，与 UI 插件目录分列
+  - from: "resources/skills"
+    to: "skills"
+  # 显式导出更新诊断时的只读 Windows 快照脚本（无用户命令/凭证采集）
+  - from: "resources/update-diagnostics"
+    to: "update-diagnostics"
+mac:
+  category: public.app-category.developer-tools
+  # adhoc 临时签名整个 bundle：Gatekeeper 从「已损坏（无绕过）」→「无法验证开发者（可右键打开）」
+  # hardenedRuntime 必须关：library validation 会拒绝预签名 Electron 框架和 pi SDK 的 .node prebuild
+  identity: "-"
+  hardenedRuntime: false
+  target:
+    - target: dmg
+      arch: [arm64, x64]
+    - target: zip
+      arch: [arm64, x64]
+  # 产物名与 productName 解耦：保持 raise-mac-* 兼容 README 下载表（productName 带空格仅作显示名）
+  artifactName: raise-mac-${arch}.${ext}
+win:
+  target:
+    - target: nsis
+      arch: [x64]
+    - target: zip
+      arch: [x64]
+  artifactName: raise-windows-${arch}.${ext}
+linux:
+  executableName: raise
+  category: Development
+  target:
+    - target: AppImage
+      arch: [x64]
+  artifactName: raise-linux-${arch}.${ext}
+nsis:
+  include: build/update-diagnostics.nsh
+  oneClick: false
+  allowToChangeInstallationDirectory: true
+# 独立项目：未配置自动更新发布源（gitee 不支持 github provider）。
+# 如需恢复应用内自动更新：用 generic provider 指向自建 latest.json，
+# 或把仓库同步到 GitHub 后改回 github provider 并填入 owner。
+# publish:
+#   provider: generic
+#   url: https://example.com/updates/raise
