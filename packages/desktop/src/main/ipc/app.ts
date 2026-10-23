@@ -17,8 +17,12 @@ import {
 import { ackQuitDialog, setQuitGuard } from "../window";
 import { registerInvokeHandlers } from "./invoke";
 
-/** 项目仓库地址（帮助跳转 + 关于页） */
-const REPO_URL = "https://gitee.com/zwxwrich/raise";
+/**
+ * 项目仓库地址（帮助跳转 + 关于页）。
+ * 主仓库在 Gitee，但安装包受 Gitee 发行版单附件 100MB 上限限制，二进制只挂在 GitHub Releases，
+ * 应用内的「下载新版 / 发行版」跳转必须落在有资产的页面，所以这里指向 GitHub 镜像仓库。
+ */
+const REPO_URL = "https://github.com/cw998-dev/raise";
 
 /**
  * 应用域：窗口级功能（不依赖 PiBackend 会话状态的部分也在此，backend 参数仅为对齐签名）。

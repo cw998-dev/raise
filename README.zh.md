@@ -54,14 +54,14 @@ Raise 把官方 Pi SDK（`@earendil-works/pi-coding-agent`）跑在 Electron 主
 
 ## 下载
 
-安装包发布在 **[GitHub Releases](https://github.com/zwxwrich/raise/releases/latest)** —— Gitee 单个发行版附件上限 100MB，这几个包都超了，所以 Gitee [发行版页](https://gitee.com/zwxwrich/raise/releases) 写说明、二进制放 GitHub。下表链接始终指向最新版本。
+安装包发布在 **[GitHub Releases](https://github.com/cw998-dev/raise/releases/latest)** —— Gitee 单个发行版附件上限 100MB，这几个包都超了，所以 Gitee [发行版页](https://gitee.com/zwxwrich/raise/releases) 写说明、二进制放 GitHub。下表链接始终指向最新版本。
 
 | 平台 | 下载 |
 | --- | --- |
-| macOS (Apple Silicon) | [raise-mac-arm64.dmg](https://github.com/zwxwrich/raise/releases/latest/download/raise-mac-arm64.dmg) |
-| macOS (Intel) | [raise-mac-x64.dmg](https://github.com/zwxwrich/raise/releases/latest/download/raise-mac-x64.dmg) |
-| Windows (x64) | [raise-windows-x64.exe](https://github.com/zwxwrich/raise/releases/latest/download/raise-windows-x64.exe)（安装器）· [raise-windows-x64.zip](https://github.com/zwxwrich/raise/releases/latest/download/raise-windows-x64.zip)（免安装） |
-| Linux (x64) | [raise-linux-x86_64.AppImage](https://github.com/zwxwrich/raise/releases/latest/download/raise-linux-x86_64.AppImage) |
+| macOS (Apple Silicon) | [raise-mac-arm64.dmg](https://github.com/cw998-dev/raise/releases/latest/download/raise-mac-arm64.dmg) |
+| macOS (Intel) | [raise-mac-x64.dmg](https://github.com/cw998-dev/raise/releases/latest/download/raise-mac-x64.dmg) |
+| Windows (x64) | [raise-windows-x64.exe](https://github.com/cw998-dev/raise/releases/latest/download/raise-windows-x64.exe)（安装器）· [raise-windows-x64.zip](https://github.com/cw998-dev/raise/releases/latest/download/raise-windows-x64.zip)（免安装） |
+| Linux (x64) | [raise-linux-x86_64.AppImage](https://github.com/cw998-dev/raise/releases/latest/download/raise-linux-x86_64.AppImage) |
 
 > 构建为 adhoc 临时签名（无 Developer ID 证书）。macOS 下载后首次打开可能提示**「Apple 无法验证 Raise 是否包含危害 Mac 安全或泄漏隐私的恶意软件」**—— 这是 Gatekeeper 拦截未公证的 App。按以下方式放行：
 >

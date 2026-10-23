@@ -55,14 +55,14 @@ And for those who prefer a GUI over a TUI:
 
 ## Download
 
-Installers are attached to **[GitHub Releases](https://github.com/zwxwrich/raise/releases/latest)** — Gitee caps a single release attachment at 100 MB, and these packages are larger, so the Gitee [release page](https://gitee.com/zwxwrich/raise/releases) carries the notes while the binaries live on GitHub. Links below always point at the newest release.
+Installers are attached to **[GitHub Releases](https://github.com/cw998-dev/raise/releases/latest)** — Gitee caps a single release attachment at 100 MB, and these packages are larger, so the Gitee [release page](https://gitee.com/zwxwrich/raise/releases) carries the notes while the binaries live on GitHub. Links below always point at the newest release.
 
 | Platform | Download |
 | --- | --- |
-| Windows (x64) | [raise-windows-x64.exe](https://github.com/zwxwrich/raise/releases/latest/download/raise-windows-x64.exe) (installer) · [raise-windows-x64.zip](https://github.com/zwxwrich/raise/releases/latest/download/raise-windows-x64.zip) (portable) |
-| macOS (Apple Silicon) | [raise-mac-arm64.dmg](https://github.com/zwxwrich/raise/releases/latest/download/raise-mac-arm64.dmg) |
-| macOS (Intel) | [raise-mac-x64.dmg](https://github.com/zwxwrich/raise/releases/latest/download/raise-mac-x64.dmg) |
-| Linux (x64) | [raise-linux-x86_64.AppImage](https://github.com/zwxwrich/raise/releases/latest/download/raise-linux-x86_64.AppImage) |
+| Windows (x64) | [raise-windows-x64.exe](https://github.com/cw998-dev/raise/releases/latest/download/raise-windows-x64.exe) (installer) · [raise-windows-x64.zip](https://github.com/cw998-dev/raise/releases/latest/download/raise-windows-x64.zip) (portable) |
+| macOS (Apple Silicon) | [raise-mac-arm64.dmg](https://github.com/cw998-dev/raise/releases/latest/download/raise-mac-arm64.dmg) |
+| macOS (Intel) | [raise-mac-x64.dmg](https://github.com/cw998-dev/raise/releases/latest/download/raise-mac-x64.dmg) |
+| Linux (x64) | [raise-linux-x86_64.AppImage](https://github.com/cw998-dev/raise/releases/latest/download/raise-linux-x86_64.AppImage) |
 
 > Builds are ad-hoc signed (no Developer ID certificate). On macOS, the first launch after a download may show **"Apple cannot verify Raise is free from malware"** — that's Gatekeeper blocking an un-notarized app. To open it:
 >
