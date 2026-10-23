@@ -51,4 +51,21 @@ npx asar extract packages/desktop/dist/mac-arm64/Raise.app/Contents/Resources/ap
 
 本机维护者的 tag、签名、网络等操作见 `.local/docs/release.md`（不入库）；文件不存在时从仓库 workflow 和 builder 配置核对，不猜发布步骤。未经用户明确要求不 push、不创建发布或覆盖已发布资产。
 
+## Gitee 主仓库 + GitHub 镜像发布
+
+二进制不挂 Gitee：发行版附件单文件上限 100 MB（GVP 200 MB），而桌面安装包必然超限（`raise-windows-x64.exe` 约 170 MB、`raise-windows-x64.zip` 约 230 MB）。所以发布链路固定为：
+
+1. 打 tag（`v*`）并推送到 GitHub 镜像仓库 → `.github/workflows/release.yml` 在 macOS/Windows/Linux runner 上构建，产物挂到 GitHub Release（`upload-artifact` 只收 `dist/*.exe|zip|dmg|AppImage|blockmap`，不要把 `win-unpacked/`、`mac*/`、`.icon-ico/`、`builder-debug.yml` 带进去）。
+2. README 下载表使用稳定链接 `https://github.com/<owner>/<repo>/releases/latest/download/<artifactName>`，始终指向最新版；`artifactName` 见 `electron-builder.yml`（`raise-mac-${arch}.*` / `raise-windows-${arch}.*` / `raise-linux-${arch}.*`）。
+3. Gitee 发行版页只写版本说明并指回 GitHub Release，附件不上传（上传必失败：超 100 MB）。
+
+镜像推送（仓库只配了 gitee origin 时）：
+
+```bash
+git remote add github https://github.com/<owner>/<repo>.git
+git push github main --tags
+```
+
+README 里的 `<owner>/<repo>` 必须与实际 GitHub 仓库一致，否则下载链接和 release 页全部 404。Windows 包可以在本机用 `npm run dist -w packages/desktop` 单独构建并在 `dist/` 冒烟；macOS/Linux 包只能由 CI 产出，本机无法替代验证。
+
 Windows 更新诊断及旧卸载器边界见 [WINDOWS-UPDATES.md](WINDOWS-UPDATES.md)。NSIS 改动须用 Windows CI 的真实 installer 编译和隔离 harness 验证，macOS 上的编译结果不能替代 Windows 行为证据。

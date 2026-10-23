@@ -55,14 +55,14 @@ And for those who prefer a GUI over a TUI:
 
 ## Download
 
-Prebuilt installers are published on the [Releases](https://gitee.com/zwxwrich/raise/releases) page.
+Installers are attached to **[GitHub Releases](https://github.com/zwxwrich/raise/releases/latest)** — Gitee caps a single release attachment at 100 MB, and these packages are larger, so the Gitee [release page](https://gitee.com/zwxwrich/raise/releases) carries the notes while the binaries live on GitHub. Links below always point at the newest release.
 
 | Platform | Download |
 | --- | --- |
-| macOS (Apple Silicon) | `raise-mac-arm64.dmg` |
-| macOS (Intel) | `raise-mac-x64.dmg` |
-| Windows | `raise-windows-x64.exe` (installer) or `raise-windows-x64.zip` |
-| Linux (x64) | `raise-linux-x86_64.AppImage` |
+| Windows (x64) | [raise-windows-x64.exe](https://github.com/zwxwrich/raise/releases/latest/download/raise-windows-x64.exe) (installer) · [raise-windows-x64.zip](https://github.com/zwxwrich/raise/releases/latest/download/raise-windows-x64.zip) (portable) |
+| macOS (Apple Silicon) | [raise-mac-arm64.dmg](https://github.com/zwxwrich/raise/releases/latest/download/raise-mac-arm64.dmg) |
+| macOS (Intel) | [raise-mac-x64.dmg](https://github.com/zwxwrich/raise/releases/latest/download/raise-mac-x64.dmg) |
+| Linux (x64) | [raise-linux-x86_64.AppImage](https://github.com/zwxwrich/raise/releases/latest/download/raise-linux-x86_64.AppImage) |
 
 > Builds are ad-hoc signed (no Developer ID certificate). On macOS, the first launch after a download may show **"Apple cannot verify Raise is free from malware"** — that's Gatekeeper blocking an un-notarized app. To open it:
 >
@@ -72,9 +72,9 @@ Prebuilt installers are published on the [Releases](https://gitee.com/zwxwrich/r
 >
 > 2. Or in Terminal: `xattr -cr "/Applications/Raise.app"`.
 >
-> Updates are checked in-app. On Windows they download and install there too (click download, then restart). On macOS the ad-hoc signed build cannot self-install, so the app jumps to the Releases page — and a freshly downloaded version will hit Gatekeeper once again. On Windows, click "More info" → "Run anyway" when SmartScreen appears.
+> Updates ship as new release downloads: there is no in-app auto-updater in these builds (no update feed is configured), so grab the newest package from the link above when a new version is out. On Windows, click "More info" → "Run anyway" when SmartScreen appears.
 >
-> On Linux: make the AppImage executable before first launch (`chmod +x raise-linux-x86_64.AppImage`). On Ubuntu 22.04+/24.04+ and derivatives, install `libfuse2` first — AppImages mount via FUSE 2, which is no longer preinstalled. Linux builds download and install updates in-app.
+> On Linux: make the AppImage executable before first launch (`chmod +x raise-linux-x86_64.AppImage`). On Ubuntu 22.04+/24.04+ and derivatives, install `libfuse2` first — AppImages mount via FUSE 2, which is no longer preinstalled.
 
 ## Development
 

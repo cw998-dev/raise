@@ -54,14 +54,14 @@ Raise 把官方 Pi SDK（`@earendil-works/pi-coding-agent`）跑在 Electron 主
 
 ## 下载
 
-预编译安装包发布在 [Releases](https://gitee.com/zwxwrich/raise/releases) 页面。
+安装包发布在 **[GitHub Releases](https://github.com/zwxwrich/raise/releases/latest)** —— Gitee 单个发行版附件上限 100MB，这几个包都超了，所以 Gitee [发行版页](https://gitee.com/zwxwrich/raise/releases) 写说明、二进制放 GitHub。下表链接始终指向最新版本。
 
 | 平台 | 下载 |
 | --- | --- |
-| macOS (Apple Silicon) | `raise-mac-arm64.dmg` |
-| macOS (Intel) | `raise-mac-x64.dmg` |
-| Windows | `raise-windows-x64.exe`（安装器）或 `raise-windows-x64.zip` |
-| Linux (x64) | `raise-linux-x86_64.AppImage` |
+| macOS (Apple Silicon) | [raise-mac-arm64.dmg](https://github.com/zwxwrich/raise/releases/latest/download/raise-mac-arm64.dmg) |
+| macOS (Intel) | [raise-mac-x64.dmg](https://github.com/zwxwrich/raise/releases/latest/download/raise-mac-x64.dmg) |
+| Windows (x64) | [raise-windows-x64.exe](https://github.com/zwxwrich/raise/releases/latest/download/raise-windows-x64.exe)（安装器）· [raise-windows-x64.zip](https://github.com/zwxwrich/raise/releases/latest/download/raise-windows-x64.zip)（免安装） |
+| Linux (x64) | [raise-linux-x86_64.AppImage](https://github.com/zwxwrich/raise/releases/latest/download/raise-linux-x86_64.AppImage) |
 
 > 构建为 adhoc 临时签名（无 Developer ID 证书）。macOS 下载后首次打开可能提示**「Apple 无法验证 Raise 是否包含危害 Mac 安全或泄漏隐私的恶意软件」**—— 这是 Gatekeeper 拦截未公证的 App。按以下方式放行：
 >
@@ -71,9 +71,9 @@ Raise 把官方 Pi SDK（`@earendil-works/pi-coding-agent`）跑在 Electron 主
 >
 > 2. 或在终端执行：`xattr -cr "/Applications/Raise.app"`。
 >
-> 更新在应用内检查。Windows 上也在应用内下载安装（点下载，再点重启）；macOS 上 adhoc 签名的构建无法自动安装，点击会跳到 Releases 页 —— 新下载的版本首次打开还会再被 Gatekeeper 拦一次。Windows 上 SmartScreen 提示时点「更多信息」→「仍要运行」。
+> 更新方式就是下载新版安装包：当前构建未配置更新源，应用内不会自动检查更新。Windows 上 SmartScreen 提示时点「更多信息」→「仍要运行」。
 >
-> Linux：首次运行前给 AppImage 加执行位（`chmod +x raise-linux-x86_64.AppImage`）；Ubuntu 22.04+/24.04+ 及衍生发行版需先安装 `libfuse2`（AppImage 依赖 FUSE 2 挂载，新版系统默认未装）。Linux 版在应用内下载并安装更新。
+> Linux：首次运行前给 AppImage 加执行位（`chmod +x raise-linux-x86_64.AppImage`）；Ubuntu 22.04+/24.04+ 及衍生发行版需先安装 `libfuse2`（AppImage 依赖 FUSE 2 挂载，新版系统默认未装）。
 
 ## 开发
 
