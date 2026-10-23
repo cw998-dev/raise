@@ -1223,7 +1223,9 @@ code {
 /* monaco 就绪前/失败时的纯文本 fallback：库默认 font-family/background 全 inherit（混入正文体），
    补齐等宽字体与主题色表面，加载瞬间不突兀 */
 .markdown-body .code-fallback-plain {
-	font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "PingFang SC", "Microsoft YaHei", monospace;
+	font-family:
+		ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "PingFang SC",
+		"Microsoft YaHei", monospace;
 	font-size: calc(12.5px * var(--fs-code-scale, 1));
 	padding: 0.75rem 1rem;
 }
@@ -1412,7 +1414,8 @@ code {
 /* mono path RTL 截断：优先保留文件名端 */
 .turn-diff-path,
 .diff-file-path {
-	font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "PingFang SC", "Microsoft YaHei", monospace;
+	font-family:
+		ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "PingFang SC", "Microsoft YaHei", monospace;
 	font-size: calc(11.5px * var(--fs-ui-scale, 1));
 	overflow: hidden;
 	text-overflow: ellipsis;
@@ -1829,7 +1832,8 @@ code {
 /* diff 行自带 grid，才能让增删背景覆盖双 gutter 与代码区的整行；
    min-width: max-content 保留长代码的横向滚动。 */
 .diff-table {
-	font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "PingFang SC", "Microsoft YaHei", monospace;
+	font-family:
+		ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "PingFang SC", "Microsoft YaHei", monospace;
 	font-size: calc(11px * var(--fs-code-scale, 1));
 	line-height: calc(20px * var(--fs-code-scale, 1));
 	min-width: max-content;
@@ -1910,7 +1914,8 @@ code {
 	border: none;
 	border-top: 1px dashed var(--color-border);
 	background: none;
-	font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "PingFang SC", "Microsoft YaHei", monospace;
+	font-family:
+		ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "PingFang SC", "Microsoft YaHei", monospace;
 	font-size: calc(10.5px * var(--fs-code-scale, 1));
 	color: var(--color-ink-faint);
 	padding: 5px;
@@ -2034,7 +2039,8 @@ code {
 	gap: 9px;
 }
 .error-note-detail {
-	font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "PingFang SC", "Microsoft YaHei", monospace;
+	font-family:
+		ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "PingFang SC", "Microsoft YaHei", monospace;
 	font-size: calc(11.5px * var(--fs-ui-scale, 1));
 	line-height: 1.7;
 	color: var(--color-ink-dim);
@@ -2543,7 +2549,9 @@ body > div.markstream-react.ms-tooltip[role="tooltip"]:not(.tooltip-element) {
 	color: var(--color-ink-dim);
 }
 .markdown-body .md-mermaid .mermaid-block pre {
-	font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "PingFang SC", "Microsoft YaHei", monospace;
+	font-family:
+		ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "PingFang SC",
+		"Microsoft YaHei", monospace;
 	font-size: calc(12.5px * var(--fs-code-scale, 1));
 	line-height: 1.7;
 }

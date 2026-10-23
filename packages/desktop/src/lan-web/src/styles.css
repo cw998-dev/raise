@@ -652,7 +652,8 @@ body {
 }
 .m-err-detail {
 	margin-top: 6px;
-	font-family: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "PingFang SC", "Microsoft YaHei", monospace;
+	font-family:
+		ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, "PingFang SC", "Microsoft YaHei", monospace;
 	font-size: 11px;
 	color: var(--ink-faint);
 	white-space: pre-wrap;
@@ -1484,7 +1485,8 @@ body {
 }
 .markdown-body .code-fallback-plain,
 .markdown-body pre {
-	font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "PingFang SC", "Microsoft YaHei", monospace;
+	font-family:
+		ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "PingFang SC", "Microsoft YaHei", monospace;
 	font-size: 12.5px;
 }
 .markdown-body .table-node {

@@ -12,7 +12,7 @@ it.each(["C:\\Users\\test\\raise", "D:\\代码\\raise\\", "C:/Users/test/raise/"
 		const session = meta({ cwd });
 		expect(sessionTitle(session, "Untitled")).toBe("raise");
 		expect(sessionProjectDir(session)).toBe("raise");
-		expect(sessionLetter(session)).toBe("p");
+		expect(sessionLetter(session)).toBe("r");
 	},
 );
 

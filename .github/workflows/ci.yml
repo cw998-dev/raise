@@ -12,6 +12,9 @@ concurrency:
 jobs:
   check:
     runs-on: ubuntu-latest
+    env:
+      # renderer 含 Mermaid/KaTeX/Monaco 大量懒加载 chunk，Node 默认堆会 OOM（与 release.yml 同因）
+      NODE_OPTIONS: "--max-old-space-size=4096"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -36,6 +39,9 @@ jobs:
 
   windows-update-diagnostics:
     runs-on: windows-latest
+    env:
+      # 同上：vite 构建 renderer 时 2GB 堆不够（此前 CI 实测 OOM，FATAL Reached heap limit）
+      NODE_OPTIONS: "--max-old-space-size=4096"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4

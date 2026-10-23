@@ -55,8 +55,7 @@ import { dirname, join } from "node:path";
 const PAGE_PORT = process.env.CDP_PORT ?? "9224";
 const MAIN_PORT = process.env.CDP_MAIN_PORT ?? "9229";
 const DEV_UI_STATE =
-	process.env.DEV_UI_STATE ??
-	join(homedir(), "Library/Application Support/@raise/desktop-dev/ui-state.json");
+	process.env.DEV_UI_STATE ?? join(homedir(), "Library/Application Support/@raise/desktop-dev/ui-state.json");
 const OUT_DIR = ".local/tmp/layout-freedom";
 const STAGE0 = process.argv.includes("--stage0");
 mkdirSync(OUT_DIR, { recursive: true });

@@ -1,4 +1,4 @@
-import { mkdirSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
@@ -20,6 +20,11 @@ const fake = vi.hoisted(() => ({
 	},
 }));
 vi.mock("node:module", () => ({ createRequire: () => () => ({ autoUpdater: fake.updater }) }));
+// @raise/backend 根入口会连带加载整个 Pi SDK（首栽约 7s），而 updater 只用 createLogger；
+// mock 掉避免测试在 5s 默认超时内连模块都加载不完
+vi.mock("@raise/backend", () => ({
+	createLogger: () => ({ info: vi.fn(), warn: vi.fn(), error: vi.fn(), debug: vi.fn() }),
+}));
 vi.mock("node:child_process", () => ({
 	execFile: vi.fn((_file, _args, _options, callback) =>
 		callback(null, "", "Authority=Developer ID Application\nTeamIdentifier=TEST"),
@@ -31,8 +36,7 @@ vi.mock("electron", () => ({
 			return fake.packaged;
 		},
 		getVersion: () => "0.6.4",
-		getPath: (name: string) =>
-			name === "exe" ? join(fake.dir, "Raise.app/Contents/MacOS/Raise") : fake.dir,
+		getPath: (name: string) => (name === "exe" ? join(fake.dir, "Raise.app/Contents/MacOS/Raise") : fake.dir),
 		on: (event: string, handler: (...args: any[]) => void) => fake.appHandlers.set(event, handler),
 	},
 	autoUpdater: {
@@ -40,11 +44,18 @@ vi.mock("electron", () => ({
 	},
 }));
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../../../.local/tmp/updater-test");
+// process.resourcesPath 是 Electron 运行时才注入的属性，纯 Node（vitest）下为 undefined，
+// 而 hasUpdaterConfig/detectManualInstall 直接读它 → 测试里指到临时目录并放一个空 app-update.yml 模拟打包态
+const realResourcesPath = Object.getOwnPropertyDescriptor(process, "resourcesPath");
 beforeEach(() => {
 	vi.resetModules();
 	vi.clearAllMocks();
 	mkdirSync(root, { recursive: true });
 	fake.dir = mkdtempSync(join(root, "case-"));
+	const resourcesDir = join(fake.dir, "resources");
+	mkdirSync(resourcesDir, { recursive: true });
+	writeFileSync(join(resourcesDir, "app-update.yml"), "");
+	Object.defineProperty(process, "resourcesPath", { value: resourcesDir, configurable: true });
 	fake.packaged = true;
 	fake.sdkHandlers.clear();
 	fake.appHandlers.clear();
@@ -54,7 +65,11 @@ beforeEach(() => {
 	fake.updater.checkForUpdates.mockResolvedValue(null);
 	fake.updater.downloadUpdate.mockResolvedValue([]);
 });
-afterEach(() => rmSync(fake.dir, { recursive: true, force: true }));
+afterEach(() => {
+	rmSync(fake.dir, { recursive: true, force: true });
+	if (realResourcesPath) Object.defineProperty(process, "resourcesPath", realResourcesPath);
+	else Reflect.deleteProperty(process, "resourcesPath");
+});
 const log = () => readFileSync(join(fake.dir, "update-diagnostics/updater.jsonl"), "utf8");
 const attempt = () =>
 	JSON.parse(readFileSync(join(fake.dir, "update-diagnostics/install-attempt.json"), "utf8"));
