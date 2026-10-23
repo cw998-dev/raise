@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/assets/img/readme-hero-dark.svg">
-    <img src="docs/assets/img/readme-hero-light.svg" alt="Raise — geometric construction wordmark and pyramid" width="100%">
+    <img src="docs/assets/img/readme-hero-light.svg" alt="Raise — geometric construction wordmark and rising R mark" width="100%">
   </picture>
 </p>
 <h1 align="center">Raise</h1>

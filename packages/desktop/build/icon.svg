@@ -10,30 +10,40 @@
 	<rect x="64" y="64" width="896" height="896" rx="220" fill="#fff" filter="url(#shadow)" />
 	<rect x="64.5" y="64.5" width="895" height="895" rx="219.5" fill="none" stroke="#323236" stroke-opacity="0.05" />
 
-	<g transform="translate(170 170) scale(2.85)">
-		<!-- 1:φ 外接矩形与制图轴 -->
+	<!-- R 构造印记：几何 R + 升起射线穿过 cap 线（Raise） -->
+	<g transform="translate(161 239) scale(2.6)">
+		<!-- 制图线：cap / x / base -->
 		<g fill="none" stroke="#cfd0d6" stroke-width="0.8" stroke-dasharray="3 3">
-			<rect x="43" y="54" width="154" height="95.2" />
-			<path d="M24 120h192M120 20v200" />
+			<path d="M30 40h255M30 145h22M30 220h200" />
 		</g>
-		<path d="M40 50v8M200 50v8M40 145v8M200 145v8M116 17h8M116 217h8" fill="none" stroke="#cfd0d6" stroke-width="0.8" />
+		<path d="M30 36v8M285 36v8M30 216v8" fill="none" stroke="#cfd0d6" stroke-width="0.8" />
 
-		<!-- 四棱锥主体 -->
-		<path d="M120 33 42 146l76 44 81-51L120 33Z" fill="none" stroke="#8e8e96" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
-		<path d="M120 33 121 103M121 103l-3 87" fill="none" stroke="#8e8e96" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round" />
-		<path d="M42 146 121 103 199 139" fill="none" stroke="#b9bac1" stroke-width="1.1" stroke-dasharray="3 3" />
+		<!-- 碗部构造圆与半径 -->
+		<circle cx="130" cy="92.5" r="52.5" fill="none" stroke="#cfd0d6" stroke-width="0.8" stroke-dasharray="3 3" />
+		<path d="M130 92.5h52.5" fill="none" stroke="#cfd0d6" stroke-width="0.8" stroke-dasharray="3 3" />
 
-		<!-- 高度 0.618 的等比透视切面 -->
-		<path d="M72 103 120 77l49 22-50 31-47-27Z" fill="none" stroke="#a4a5ad" stroke-width="1" stroke-dasharray="3.5 3.5" />
-		<path d="M72 103 120 130 169 99M120 77v53" fill="none" stroke="#cfd0d6" stroke-width="0.8" stroke-dasharray="3 3" />
+		<!-- 字母 R 主体：竖笔 + 碗 + 腿 -->
+		<path d="M60 40v180" fill="none" stroke="#8e8e96" stroke-width="2.5" stroke-linecap="round" />
+		<path d="M60 40h70a52.5 52.5 0 0 1 0 105H60" fill="none" stroke="#8e8e96" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+		<path d="M122 145l63 75" fill="none" stroke="#8e8e96" stroke-width="2.5" stroke-linecap="round" />
 
-		<!-- 比例标注 -->
-		<path d="M207 33v157M203 33h8M203 93h8M203 190h8" fill="none" stroke="#cfd0d6" stroke-width="0.8" />
+		<!-- 升起射线：自腿部终端穿过 cap 线，空心箭头 -->
+		<path d="M185 220l81-188" fill="none" stroke="#a4a5ad" stroke-width="1.8" stroke-linecap="round" />
+		<path d="M267.9 50.2 266 32l-14.5 11.1" fill="none" stroke="#a4a5ad" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+
+		<!-- α 角标注：射线与 base 夹角 -->
+		<path d="M215 220a30 30 0 0 0-18.2-27.5" fill="none" stroke="#cfd0d6" stroke-width="0.8" />
+
+		<!-- 比例与角度标注 -->
 		<g fill="#a4a4ac" font-family="Georgia, 'Times New Roman', serif" font-size="7.5" font-style="italic">
-			<text x="214" y="96">0.382</text>
-			<text x="214" y="146">0.618</text>
-			<text x="179" y="145">φ</text>
-			<text x="49" y="51">1 : φ</text>
+			<text x="152" y="88">φ</text>
+			<text x="222" y="206">α</text>
+			<text x="34" y="28">1 : φ</text>
+		</g>
+		<g fill="#a4a4ac" font-family="'Courier New', monospace" font-size="6.5">
+			<text x="292" y="43">cap</text>
+			<text x="36" y="141">x</text>
+			<text x="234" y="216">base</text>
 		</g>
 	</g>
 </svg>

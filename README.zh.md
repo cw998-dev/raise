@@ -1,7 +1,7 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/assets/img/readme-hero-dark.svg">
-    <img src="docs/assets/img/readme-hero-light.svg" alt="Raise 几何构造字标与立体金字塔" width="100%">
+    <img src="docs/assets/img/readme-hero-light.svg" alt="Raise 几何构造字标与升起射线 R 印记" width="100%">
   </picture>
 </p>
 <h1 align="center">Raise</h1>
