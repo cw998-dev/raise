@@ -23,21 +23,13 @@
 
 ## Demo
 
-![Raise new-session page](docs/assets/img/chat_001.png)
-
-![Raise project and session sidebar](docs/assets/img/chat_002.png)
+<!-- Pending reshoot: chat_001 / chat_002 / demo-chat.gif / chat_img_bg_show_img.png all show a demo project
+     named "percho" (and branch feat/channel-watch-retention), which drags the old brand name into a public README.
+     When retaking, use a neutral project name (e.g. raise-demo) and a neutral branch name. -->
 
 ![Raise per-turn diff sidebar](docs/assets/img/chat_003.png)
 
 ![UI plugins settings — the whale maid desk pet ships built in](docs/assets/img/raise_ui_plugins.png)
-
-**Chat**
-
-![Chat page demo](docs/assets/img/demo-chat.gif)
-
-**Custom background & dark theme**
-
-![Chat with custom background image in dark theme](docs/assets/img/chat_img_bg_show_img.png)
 
 ## Why Raise?
 

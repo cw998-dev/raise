@@ -23,21 +23,12 @@
 
 ## 演示
 
-![Raise 新会话页](docs/assets/img/chat_001.png)
-
-![Raise 项目与会话侧栏](docs/assets/img/chat_002.png)
+<!-- 待重拍：原 chat_001 / chat_002 / demo-chat.gif / chat_img_bg_show_img.png 的演示项目名是 percho，
+     等于把旧品牌名带进公开 README；重拍时请用中性项目名（如 raise-demo）与中性分支名。 -->
 
 ![Raise 逐轮改动侧栏](docs/assets/img/chat_003.png)
 
 ![设置 —— UI 插件管理，内置鲸鱼娘桌宠](docs/assets/img/raise_ui_plugins.png)
-
-**聊天页**
-
-![聊天页演示](docs/assets/img/demo-chat.gif)
-
-**自定义背景 + 深色主题**
-
-![深色主题下带自定义背景的聊天页](docs/assets/img/chat_img_bg_show_img.png)
 
 ## 为什么选择 Raise？
 
