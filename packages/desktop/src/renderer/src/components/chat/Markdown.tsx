@@ -7,7 +7,7 @@ import { type MouseEvent, useMemo, useRef } from "react";
 import { getPi } from "../../api";
 import { selectActiveCwd } from "../../lib/active-cwd";
 import { errText } from "../../lib/error-text";
-import { monacoFontSizeFor, monacoLineHeightFor } from "../../lib/typography";
+import { MONACO_FONT_FAMILY, monacoFontSizeFor, monacoLineHeightFor } from "../../lib/typography";
 import { useSessionsStore } from "../../stores/sessions";
 import { useThemeStore } from "../../stores/theme";
 import { pushToast } from "../../stores/toasts";
@@ -41,6 +41,8 @@ const CODE_BLOCK_PROPS_BASE = {
 	// 光标行在右缘留一枚黑色短杠标记，只读块无导航价值。编辑器式 decoration 也关闭：
 	// 全角标点/不可见字符、同词和括号的描边在只读展示里像残留选区，且没有修复动作。
 	monacoOptions: {
+		// 等宽栈补 CJK 回退：monaco 默认字体族按平台写死且无中文，代码块里的中文会回落宋体
+		fontFamily: MONACO_FONT_FAMILY,
 		renderLineHighlight: "none",
 		selectionHighlight: false,
 		occurrencesHighlight: "off",

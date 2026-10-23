@@ -39,6 +39,17 @@ const MONACO_GOLDEN_LINE_HEIGHT_RATIO_DARWIN = 1.5;
 const MONACO_GOLDEN_LINE_HEIGHT_RATIO_OTHER = 1.35;
 const MONACO_MINIMUM_LINE_HEIGHT = 8;
 
+/**
+ * 传给 monaco 的 `fontFamily`（与 globals.css 的 `--font-mono` 同一套栈）。
+ *
+ * monaco 的默认字体族在 JS 里按平台写死：Windows = `Consolas, 'Courier New', monospace`，
+ * macOS = `Menlo, Monaco, 'Courier New', monospace` —— 都不含 CJK 字形，于是代码块里的中文
+ * 注释/hover 文字会回落到系统中文字体（Windows 上是宋体），与正文的微软雅黑明显两个字体。
+ * 它把字体以 inline style 写在 `.view-lines` 上，**不经过任何 CSS 变量**，只能在选项里给。
+ */
+export const MONACO_FONT_FAMILY =
+	'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "PingFang SC", "Microsoft YaHei", monospace';
+
 /** monaco 在该平台上的基准字号（乘数 1 时的字号） */
 export function monacoBaseFontSize(platform: string): number {
 	return platform === "darwin" ? MONACO_BASE_FONT_SIZE_DARWIN : MONACO_BASE_FONT_SIZE_OTHER;
