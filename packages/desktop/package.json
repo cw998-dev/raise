@@ -14,7 +14,7 @@
 		"build": "npm run build:lan-web && electron-vite build",
 		"typecheck": "tsc --noEmit -p tsconfig.node.json && tsc --noEmit -p tsconfig.web.json",
 		"test": "vitest run",
-		"dist": "npm run build && electron-builder",
+		"dist": "npm run build && cross-env ELECTRON_BUILDER_BINARIES_MIRROR=https://npmmirror.com/mirrors/electron-builder-binaries/ ELECTRON_MIRROR=https://npmmirror.com/mirrors/electron/ electron-builder",
 		"start": "electron-vite preview"
 	},
 	"dependencies": {
@@ -45,6 +45,7 @@
 		"@types/react": "^19.2.0",
 		"@types/react-dom": "^19.2.0",
 		"@vitejs/plugin-react": "^5.1.1",
+		"cross-env": "^10.1.0",
 		"electron": "43.3.0",
 		"electron-builder": "^26.0.0",
 		"electron-vite": "^5.0.0",
